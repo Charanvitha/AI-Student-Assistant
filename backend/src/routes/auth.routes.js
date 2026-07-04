@@ -6,6 +6,7 @@ import { validate } from '../middleware/validate.js';
 
 const router = Router();
 
+// Validation Schemas
 const registerSchema = z.object({
   body: z.object({
     name: z.string().min(2),
@@ -24,46 +25,22 @@ const loginSchema = z.object({
   })
 });
 
-router.post('/login', validate(loginSchema), async (req, res, next) => {
-  try {
-    console.log("LOGIN BODY:", req.body);
-
-    const user = await User.findOne({ email: req.body.email });
-
-    console.log("USER FOUND:", user);
-
-    if (!user) {
-      return res.status(401).json({ message: "User not found" });
-    }
-
-    const match = await user.comparePassword(req.body.password);
-
-    console.log("PASSWORD MATCH:", match);
-
-    if (!match) {
-      return res.status(401).json({ message: "Wrong password" });
-    }
-
-    res.json({
-      token: signToken(user),
-      user: toSafeUser(user)
-    });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-
+// =======================
+// Register
+// =======================
 router.post('/register', validate(registerSchema), async (req, res, next) => {
   try {
     console.log("REGISTER BODY:", req.body);
 
-    const existing = await User.findOne({ email: req.body.email });
+    const existing = await User.findOne({
+      email: req.body.email
+    });
 
     if (existing) {
       console.log("EMAIL EXISTS");
-      return next({ status: 409, message: "Email already registered" });
+      return res.status(409).json({
+        error: "Email already registered"
+      });
     }
 
     const user = await User.create(req.body);
@@ -72,17 +49,64 @@ router.post('/register', validate(registerSchema), async (req, res, next) => {
 
     const token = signToken(user);
 
+    console.log("TOKEN CREATED");
+
     res.status(201).json({
       token,
       user: toSafeUser(user)
     });
 
   } catch (err) {
-    console.error("REGISTER ERROR:", err);
+    console.error("REGISTER ERROR:");
+    console.error(err);
     next(err);
   }
 });
 
+// =======================
+// Login
+// =======================
+router.post('/login', validate(loginSchema), async (req, res, next) => {
+  try {
+    console.log("LOGIN BODY:", req.body);
+
+    const user = await User.findOne({
+      email: req.body.email
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        error: "Invalid email or password"
+      });
+    }
+
+    const match = await user.comparePassword(req.body.password);
+
+    if (!match) {
+      return res.status(401).json({
+        error: "Invalid email or password"
+      });
+    }
+
+    const token = signToken(user);
+
+    console.log("LOGIN SUCCESS:", user.email);
+
+    res.json({
+      token,
+      user: toSafeUser(user)
+    });
+
+  } catch (err) {
+    console.error("LOGIN ERROR:");
+    console.error(err);
+    next(err);
+  }
+});
+
+// =======================
+// Helper
+// =======================
 function toSafeUser(user) {
   return {
     id: user._id,

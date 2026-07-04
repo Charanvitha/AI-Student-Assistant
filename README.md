@@ -138,3 +138,18 @@ Services:
 - Put the backend and AI service behind HTTPS.
 - For resume uploads, configure persistent object storage instead of local `uploads/`.
 - The AI service includes deterministic fallbacks so demos work without paid LLM keys.
+
+## Public Deployment
+
+Use this setup for a hackathon demo with public URLs:
+
+1. Create a MongoDB Atlas cluster and copy the connection string.
+2. Deploy `render.yaml` on Render as a Blueprint.
+3. In Render, set:
+   - `MONGODB_URI` to the Atlas connection string.
+   - `CLIENT_ORIGIN` to the final Vercel frontend URL.
+   - Optional `OPENAI_API_KEY` or `GEMINI_API_KEY`; otherwise mock mode works.
+4. Deploy the `frontend` folder on Vercel.
+5. In Vercel, set:
+   - `VITE_API_URL=https://YOUR_RENDER_BACKEND_URL/api`
+6. Redeploy the frontend after setting `VITE_API_URL`.
