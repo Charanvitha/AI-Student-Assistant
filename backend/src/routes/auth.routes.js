@@ -54,6 +54,35 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
   }
 });
 
+
+router.post('/register', validate(registerSchema), async (req, res, next) => {
+  try {
+    console.log("REGISTER BODY:", req.body);
+
+    const existing = await User.findOne({ email: req.body.email });
+
+    if (existing) {
+      console.log("EMAIL EXISTS");
+      return next({ status: 409, message: "Email already registered" });
+    }
+
+    const user = await User.create(req.body);
+
+    console.log("USER CREATED:", user.email);
+
+    const token = signToken(user);
+
+    res.status(201).json({
+      token,
+      user: toSafeUser(user)
+    });
+
+  } catch (err) {
+    console.error("REGISTER ERROR:", err);
+    next(err);
+  }
+});
+
 function toSafeUser(user) {
   return {
     id: user._id,
