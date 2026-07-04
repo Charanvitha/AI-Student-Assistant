@@ -16,11 +16,14 @@ import docs from '../docs/openapi.js';
 export function createApp() {
   const app = express();
 
+  app.set("trust proxy", 1);   // <-- ADD THIS
+
   app.use(helmet());
   app.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173' }));
   app.use(express.json({ limit: '2mb' }));
   app.use(morgan('dev'));
   app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 300 }));
+
 
   app.get('/health', (_req, res) => res.json({ status: 'ok', service: 'backend' }));
   app.get('/api/docs', (_req, res) => res.json(docs));
