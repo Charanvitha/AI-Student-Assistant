@@ -24,28 +24,32 @@ const loginSchema = z.object({
   })
 });
 
-router.post('/register', validate(registerSchema), async (req, res, next) => {
-  try {
-    const existing = await User.findOne({ email: req.body.email });
-    if (existing) return next({ status: 409, message: 'Email already registered' });
-
-    const user = await User.create(req.body);
-    const token = signToken(user);
-    res.status(201).json({ token, user: toSafeUser(user) });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post('/login', validate(loginSchema), async (req, res, next) => {
   try {
+    console.log("LOGIN BODY:", req.body);
+
     const user = await User.findOne({ email: req.body.email });
-    if (!user || !(await user.comparePassword(req.body.password))) {
-      return next({ status: 401, message: 'Invalid email or password' });
+
+    console.log("USER FOUND:", user);
+
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
     }
 
-    res.json({ token: signToken(user), user: toSafeUser(user) });
+    const match = await user.comparePassword(req.body.password);
+
+    console.log("PASSWORD MATCH:", match);
+
+    if (!match) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    res.json({
+      token: signToken(user),
+      user: toSafeUser(user)
+    });
   } catch (error) {
+    console.error(error);
     next(error);
   }
 });
