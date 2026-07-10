@@ -1,10 +1,13 @@
-GitHub Repository:
-https://github.com/Charanvitha/AI-Student-Assistant
+Live App:
+https://ai-student-assistant-bice.vercel.app
 
-Live Demo:
+Login:
 https://ai-student-assistant-bice.vercel.app/login
 
-Backend API:
+GitHub:
+https://github.com/Charanvitha/AI-Student-Assistant
+
+Backend:
 https://campuscopilot-backend.onrender.com
 
 AI Service:
