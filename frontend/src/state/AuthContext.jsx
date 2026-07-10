@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
-import { api } from '../lib/api.js';
+import { api, setAuthToken } from '../lib/api.js';
 
 const AuthContext = createContext(null);
 
@@ -20,6 +20,7 @@ export function AuthProvider({ children }) {
   function persist(data) {
     localStorage.setItem('campuscopilot_token', data.token);
     localStorage.setItem('campuscopilot_user', JSON.stringify(data.user));
+    setAuthToken(data.token);
     setToken(data.token);
     setUser(data.user);
   }
@@ -27,6 +28,7 @@ export function AuthProvider({ children }) {
   function logout() {
     localStorage.removeItem('campuscopilot_token');
     localStorage.removeItem('campuscopilot_user');
+    setAuthToken(null);
     setToken(null);
     setUser(null);
   }
