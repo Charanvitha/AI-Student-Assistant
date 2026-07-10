@@ -1,3 +1,15 @@
+GitHub Repository:
+https://github.com/Charanvitha/AI-Student-Assistant
+
+Live Demo:
+https://ai-student-assistant-bice.vercel.app/login
+
+Backend API:
+https://campuscopilot-backend.onrender.com
+
+AI Service:
+https://campuscopilot-ai-service.onrender.com
+
 # CampusCopilot AI
 
 CampusCopilot AI is a production-ready AI-native full-stack application for students. It combines a React dashboard, secure Node.js APIs, MongoDB persistence, and a Python FastAPI AI layer with autonomous agents, semantic search, resume analysis, study planning, and copilot chat.
