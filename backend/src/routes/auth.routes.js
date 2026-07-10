@@ -6,7 +6,6 @@ import { validate } from '../middleware/validate.js';
 
 const router = Router();
 
-// Validation Schemas
 const registerSchema = z.object({
   body: z.object({
     name: z.string().min(2),
@@ -25,31 +24,20 @@ const loginSchema = z.object({
   })
 });
 
-// =======================
-// Register
-// =======================
 router.post('/register', validate(registerSchema), async (req, res, next) => {
   try {
-    console.log("REGISTER BODY:", req.body);
-
     const existing = await User.findOne({
       email: req.body.email
     });
 
     if (existing) {
-      console.log("EMAIL EXISTS");
       return res.status(409).json({
         error: "Email already registered"
       });
     }
 
     const user = await User.create(req.body);
-
-    console.log("USER CREATED:", user.email);
-
     const token = signToken(user);
-
-    console.log("TOKEN CREATED");
 
     res.status(201).json({
       token,
@@ -57,19 +45,17 @@ router.post('/register', validate(registerSchema), async (req, res, next) => {
     });
 
   } catch (err) {
-    console.error("REGISTER ERROR:");
-    console.error(err);
+    if (err.code === 11000) {
+      return res.status(409).json({
+        error: "Email already registered"
+      });
+    }
     next(err);
   }
 });
 
-// =======================
-// Login
-// =======================
 router.post('/login', validate(loginSchema), async (req, res, next) => {
   try {
-    console.log("LOGIN BODY:", req.body);
-
     const user = await User.findOne({
       email: req.body.email
     });
@@ -90,23 +76,16 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
 
     const token = signToken(user);
 
-    console.log("LOGIN SUCCESS:", user.email);
-
     res.json({
       token,
       user: toSafeUser(user)
     });
 
   } catch (err) {
-    console.error("LOGIN ERROR:");
-    console.error(err);
     next(err);
   }
 });
 
-// =======================
-// Helper
-// =======================
 function toSafeUser(user) {
   return {
     id: user._id,
