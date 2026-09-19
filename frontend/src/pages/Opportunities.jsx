@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { ExternalLink, Search } from 'lucide-react';
 import Card from '../components/Card.jsx';
 import { api } from '../lib/api.js';
 
@@ -30,7 +30,20 @@ export default function Opportunities() {
             <span className="rounded bg-slate-100 px-2 py-1 text-xs uppercase">{item.type}</span>
             <h3 className="mt-3 font-semibold">{item.title}</h3>
             <p className="mt-2 text-sm text-slate-600">{item.text}</p>
-            <p className="mt-3 text-xs text-slate-500">Similarity {item.score.toFixed(2)}</p>
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <p className="text-xs text-slate-500">Similarity {Number(item.score || 0).toFixed(2)}</p>
+              {item.url ? (
+                <a
+                  className="focus-ring inline-flex items-center gap-2 rounded border border-line px-3 py-2 text-sm font-medium hover:bg-slate-50"
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <ExternalLink size={16} />
+                  Open
+                </a>
+              ) : null}
+            </div>
           </Card>
         ))}
       </div>

@@ -85,9 +85,27 @@ function fallbackSearch(payload) {
   return {
     query,
     results: [
-      { type: 'internship', title: 'AI Intern Starter Track', text: 'Beginner-friendly AI internship path for Python, data, and ML basics.', score: 0.91 },
-      { type: 'hackathon', title: 'MERN Stack Sprint', text: 'Hackathon idea focused on MongoDB, Express, React, Node, and deployment.', score: 0.86 },
-      { type: 'roadmap', title: 'Full Stack Developer Path', text: 'Learn React, Node.js, databases, auth, testing, and deployment.', score: 0.82 }
+      {
+        type: 'internship',
+        title: 'AI Intern Starter Track',
+        text: 'Beginner-friendly AI internship path for Python, data, and ML basics.',
+        url: 'https://internshala.com/internships/artificial-intelligence-ai-internship/',
+        score: 0.91
+      },
+      {
+        type: 'hackathon',
+        title: 'MERN Stack Sprint',
+        text: 'Hackathon idea focused on MongoDB, Express, React, Node, and deployment.',
+        url: 'https://devpost.com/hackathons',
+        score: 0.86
+      },
+      {
+        type: 'roadmap',
+        title: 'Full Stack Developer Path',
+        text: 'Learn React, Node.js, databases, auth, testing, and deployment.',
+        url: 'https://roadmap.sh/full-stack',
+        score: 0.82
+      }
     ]
   };
 }

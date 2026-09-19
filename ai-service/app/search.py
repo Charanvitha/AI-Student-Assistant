@@ -14,13 +14,13 @@ except Exception:  # pragma: no cover
 
 
 DOCUMENTS = [
-    {"type": "internship", "title": "AI Intern Starter Track", "text": "Beginner AI internship for Python, data, and ML fundamentals."},
-    {"type": "hackathon", "title": "MERN Stack Sprint", "text": "Hackathon for MongoDB, Express, React, Node, APIs, and deployment."},
-    {"type": "roadmap", "title": "Full Stack Developer Path", "text": "Learn React, Node.js, databases, authentication, testing, and deployment."},
-    {"type": "internship", "title": "Frontend Engineering Internship", "text": "React internship focused on components, accessibility, and API integration."},
-    {"type": "hackathon", "title": "Campus AI Buildathon", "text": "Build AI agents, RAG apps, semantic search, and productivity copilots."},
-    {"type": "resource", "title": "Data Scientist Launch Plan", "text": "Statistics, Python, pandas, machine learning, SQL, and portfolio projects."},
-    {"type": "resource", "title": "DevOps Fundamentals", "text": "Linux, Docker, CI/CD, cloud deployment, monitoring, and Kubernetes basics."},
+    {"type": "internship", "title": "AI Intern Starter Track", "text": "Beginner AI internship for Python, data, and ML fundamentals.", "url": "https://internshala.com/internships/artificial-intelligence-ai-internship/"},
+    {"type": "hackathon", "title": "MERN Stack Sprint", "text": "Hackathon for MongoDB, Express, React, Node, APIs, and deployment.", "url": "https://devpost.com/hackathons"},
+    {"type": "roadmap", "title": "Full Stack Developer Path", "text": "Learn React, Node.js, databases, authentication, testing, and deployment.", "url": "https://roadmap.sh/full-stack"},
+    {"type": "internship", "title": "Frontend Engineering Internship", "text": "React internship focused on components, accessibility, and API integration.", "url": "https://internshala.com/internships/front-end-development-internship/"},
+    {"type": "hackathon", "title": "Campus AI Buildathon", "text": "Build AI agents, RAG apps, semantic search, and productivity copilots.", "url": "https://devfolio.co/hackathons"},
+    {"type": "resource", "title": "Data Scientist Launch Plan", "text": "Statistics, Python, pandas, machine learning, SQL, and portfolio projects.", "url": "https://roadmap.sh/ai-data-scientist"},
+    {"type": "resource", "title": "DevOps Fundamentals", "text": "Linux, Docker, CI/CD, cloud deployment, monitoring, and Kubernetes basics.", "url": "https://roadmap.sh/devops"},
 ]
 
 
